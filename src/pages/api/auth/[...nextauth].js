@@ -2,15 +2,20 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 
+// Default fallback values if env vars aren't set
+const DEFAULT_ADMIN_EMAIL = 'admin@example.com';
+const DEFAULT_ADMIN_PASSWORD = 'password123';
+const DEFAULT_SECRET = 'this-is-a-development-secret-key';
+
 // For demo purposes, we're using a simple in-memory user
 // In a real app, this would come from MongoDB
 const users = [
   {
     id: '1',
     name: 'Admin User',
-    email: process.env.ADMIN_EMAIL || 'admin@example.com',
+    email: process.env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL,
     // This should be hashed in a real application
-    password: process.env.ADMIN_PASSWORD || 'password123'
+    password: process.env.ADMIN_PASSWORD || DEFAULT_ADMIN_PASSWORD
   }
 ];
 
@@ -70,5 +75,5 @@ export default NextAuth({
     signIn: '/', // We use a custom signin modal instead
     error: '/'
   },
-  secret: process.env.NEXTAUTH_SECRET || 'your-secret-key-here'
+  secret: process.env.NEXTAUTH_SECRET || DEFAULT_SECRET
 });

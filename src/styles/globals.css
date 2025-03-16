@@ -6,6 +6,7 @@
 .leaflet-container {
   width: 100%;
   height: 100%;
+  z-index: 10; /* Ensure this is lower than our modal z-index */
 }
 
 .leaflet-popup-content {

@@ -78,7 +78,7 @@ export default function Home() {
 
       <div className="flex h-[calc(100vh-4rem)]">
         {/* Sidebar with pin list */}
-        <div className="w-96 bg-white shadow-lg z-10 overflow-auto">
+        <div className="w-96 bg-white shadow-lg z-20 overflow-auto">
           <div className="p-4 border-b">
             <h2 className="text-xl font-bold mb-4">Locations</h2>
             
