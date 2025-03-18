@@ -80,27 +80,25 @@ export default function Map({
       />
       
       {/* LGD Border */}
-      {!boundariesLoading && (
-        <GeoJSON 
-          data={boundaries} 
-          style={(feature) => ({
-            ...mapConfig.borderStyle,
-            // Use different colors for different municipalities if available
-            color: feature.properties?.simpleName ? 
-              `hsl(${feature.properties.simpleName.charCodeAt(0) % 360}, 70%, 50%)` : 
-              mapConfig.borderStyle.color
-          })}
-          onEachFeature={(feature, layer) => {
-            if (feature.properties && feature.properties.name) {
-              layer.bindTooltip(feature.properties.name, {
-                permanent: false,
-                direction: 'center',
-                className: 'lgd-border-tooltip'
-              });
-            }
-          }}
-        />
-      )}
+      <GeoJSON 
+        data={boundaries} 
+        style={(feature) => ({
+          ...mapConfig.borderStyle,
+          // Use different colors for different municipalities if available
+          color: feature.properties?.simpleName ? 
+            `hsl(${feature.properties.simpleName.charCodeAt(0) % 360}, 70%, 50%)` : 
+            mapConfig.borderStyle.color
+        })}
+        onEachFeature={(feature, layer) => {
+          if (feature.properties && feature.properties.name) {
+            layer.bindTooltip(feature.properties.name, {
+              permanent: false,
+              direction: 'center',
+              className: 'lgd-border-tooltip'
+            });
+          }
+        }}
+      />
       
       {/* Map event handlers */}
       {isAdmin && <MapEventHandler onMapClick={onMapClick} />}
