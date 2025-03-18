@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { format } from 'date-fns';
 import PinMarker from './PinMarker';
-import BoundaryEnforcer from './BoundaryEnforcer';
-import MapLegend from './MapLegend';
 import mapConfig from '../config/mapConfig';
-import useBoundaries from '../hooks/useBoundaries';
 
 // Component to handle map click events
 function MapEventHandler({ onMapClick }) {
@@ -46,9 +43,6 @@ export default function Map({
   // Initial position is centered on the configured area
   const [position, setPosition] = useState([mapConfig.initialPosition.lat, mapConfig.initialPosition.lng]);
   const [zoom, setZoom] = useState(mapConfig.initialZoom);
-  
-  // Use the boundaries hook (default to static data to avoid issues)
-  const { boundaries, loading: boundariesLoading } = useBoundaries(false);
 
   // Fix for Leaflet default icon issues in Next.js
   useEffect(() => {
@@ -69,42 +63,15 @@ export default function Map({
       maxZoom={mapConfig.maxZoom}
       maxBounds={mapConfig.boundaries}
       maxBoundsViscosity={1.0} // Prevents the map from being dragged outside bounds
-      keyboard={true}
-      inertia={true}
-      inertiaDeceleration={3000} // Faster deceleration to prevent boundary issues
-      worldCopyJump={false}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       
-      {/* LGD Border */}
-      <GeoJSON 
-        data={boundaries} 
-        style={(feature) => ({
-          ...mapConfig.borderStyle,
-          // Use different colors for different municipalities if available
-          color: feature.properties?.simpleName ? 
-            `hsl(${feature.properties.simpleName.charCodeAt(0) % 360}, 70%, 50%)` : 
-            mapConfig.borderStyle.color
-        })}
-        onEachFeature={(feature, layer) => {
-          if (feature.properties && feature.properties.name) {
-            layer.bindTooltip(feature.properties.name, {
-              permanent: false,
-              direction: 'center',
-              className: 'lgd-border-tooltip'
-            });
-          }
-        }}
-      />
-      
       {/* Map event handlers */}
       {isAdmin && <MapEventHandler onMapClick={onMapClick} />}
       <FlyToMarker selectedPin={selectedPin} />
-      <BoundaryEnforcer bounds={mapConfig.boundaries} />
-      <MapLegend />
       
       {/* Display all pins */}
       {pins.map((pin) => (

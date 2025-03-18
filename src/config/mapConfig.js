@@ -1,99 +1,123 @@
-/**
- * Central configuration for map settings
- * Edit this file to customize the application for different areas
- */
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { format } from 'date-fns';
+import PinMarker from './PinMarker';
+import mapConfig from '../config/mapConfig';
 
-const mapConfig = {
-    // Area name (displayed in UI)
-    areaName: "LGD Bud-Uj Razem",
-    
-    // Initial map position
-    initialPosition: {
-      lat: 51.7833,
-      lng: 19.4667,
-    },
-    
-    // Initial zoom level
-    initialZoom: 9,
-    
-    // Zoom restrictions
-    minZoom: 8,
-    maxZoom: 18,
-    
-    // Map boundaries (to prevent panning too far)
-    // Format: [[southWest_lat, southWest_lng], [northEast_lat, northEast_lng]]
-    boundaries: [
-      [51.0, 18.0], // Southwest corner
-      [52.5, 21.0]  // Northeast corner
-    ],
-    
-    // Border styling for the LGD area
-    borderStyle: {
-      color: "#3388ff",
-      weight: 3,
-      opacity: 0.7,
-      fill: true,
-      fillColor: "#3388ff",
-      fillOpacity: 0.1,
-      dashArray: "5, 5",
-      lineCap: "round"
-    },
-    
-    // Sample pins for the area (used for initial demo)
-    samplePins: [
-      {
-        id: '1',
-        name: 'Urząd Gminy Rokiciny',
-        lat: 51.6970,
-        lng: 19.7574,
-        date: '2023-07-15',
-        description: 'Główny budynek administracyjny gminy Rokiciny',
-        imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
-        value: 1500000,
-        mainCategory: 'finance',
-        categories: ['finance', 'social']
-      },
-      {
-        id: '2',
-        name: 'Centrum Społeczne w Ujazd',
-        lat: 51.6062,
-        lng: 19.5696,
-        date: '2023-06-10',
-        description: 'Lokalne centrum społeczne wspierające mieszkańców',
-        imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
-        value: 450000,
-        mainCategory: 'social',
-        categories: ['social', 'health']
-      },
-      {
-        id: '3',
-        name: 'Ośrodek Zdrowia Będków',
-        lat: 51.5383,
-        lng: 19.7200,
-        date: '2023-07-01',
-        description: 'Nowoczesna placówka zdrowotna świadcząca usługi medyczne',
-        imageUrl: 'https://images.unsplash.com/photo-1516549655669-d2190c128a78',
-        value: 750000,
-        mainCategory: 'health',
-        categories: ['health']
+// Component to handle map click events
+function MapEventHandler({ onMapClick }) {
+  useMapEvents({
+    click: (e) => {
+      if (onMapClick) {
+        onMapClick(e);
       }
-    ],
-    
-    // Category translations
-    categoryNames: {
-      finance: 'Finanse',
-      social: 'Społeczne',
-      health: 'Zdrowie'
     },
-    
-    // Currency symbol and format
-    currency: {
-      symbol: 'zł',
-      format: (value) => `${value.toLocaleString()} zł`
-    },
-    
-    // Date format (for display)
-    dateFormat: 'dd.MM.yyyy'
-  };
+  });
+  return null;
+}
+
+// Component to fly to selected pin
+function FlyToMarker({ selectedPin }) {
+  const map = useMap();
   
-  export default mapConfig;
+  useEffect(() => {
+    if (selectedPin) {
+      map.flyTo([selectedPin.lat, selectedPin.lng], 15, {
+        duration: 1
+      });
+    }
+  }, [selectedPin, map]);
+  
+  return null;
+}
+
+export default function Map({ 
+  pins = [], 
+  selectedPin, 
+  onSelectPin, 
+  onMapClick,
+  isAdmin = false
+}) {
+  // Initial position is centered on the configured area
+  const [position, setPosition] = useState([mapConfig.initialPosition.lat, mapConfig.initialPosition.lng]);
+  const [zoom, setZoom] = useState(mapConfig.initialZoom);
+
+  // Fix for Leaflet default icon issues in Next.js
+  useEffect(() => {
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: '/images/marker-icon-2x.png',
+      iconUrl: '/images/marker-icon.png',
+      shadowUrl: '/images/marker-shadow.png',
+    });
+  }, []);
+
+  return (
+    <MapContainer 
+      center={position} 
+      zoom={zoom} 
+      style={{ height: '100%', width: '100%' }}
+      minZoom={mapConfig.minZoom}
+      maxZoom={mapConfig.maxZoom}
+      maxBounds={mapConfig.boundaries}
+      maxBoundsViscosity={1.0} // Prevents the map from being dragged outside bounds
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      
+      {/* Map event handlers */}
+      {isAdmin && <MapEventHandler onMapClick={onMapClick} />}
+      <FlyToMarker selectedPin={selectedPin} />
+      
+      {/* Display all pins */}
+      {pins.map((pin) => (
+        <PinMarker 
+          key={pin.id}
+          pin={pin}
+          isSelected={selectedPin?.id === pin.id}
+          onClick={() => onSelectPin(pin)}
+        >
+          <Popup>
+            {pin.imageUrl && (
+              <img 
+                src={pin.imageUrl} 
+                alt={pin.name} 
+                className="pin-popup-image"
+              />
+            )}
+            <div className="pin-popup-title">{pin.name}</div>
+            <div className={`pin-popup-category ${pin.mainCategory}`}>
+              {mapConfig.categoryNames[pin.mainCategory] || 
+               pin.mainCategory.charAt(0).toUpperCase() + pin.mainCategory.slice(1)}
+            </div>
+            <div className="pin-popup-date">
+              {format(new Date(pin.date), mapConfig.dateFormat)}
+            </div>
+            <div className="pin-popup-description">{pin.description}</div>
+            <div className="pin-popup-value">
+              Wartość: {mapConfig.currency.format(pin.value)}
+            </div>
+            
+            {/* Display all categories */}
+            <div className="mt-2 text-xs">
+              Kategorie:
+              {pin.categories.map(category => (
+                <span 
+                  key={category}
+                  className={`inline-block px-2 py-1 mr-1 rounded-full bg-${category} text-white text-xs`}
+                >
+                  {mapConfig.categoryNames[category] || 
+                   category.charAt(0).toUpperCase() + category.slice(1)}
+                </span>
+              ))}
+            </div>
+          </Popup>
+        </PinMarker>
+      ))}
+    </MapContainer>
+  );
+}
