@@ -27,6 +27,18 @@ const mapConfig = {
       [52.5, 21.0]  // Northeast corner
     ],
     
+    // Border styling for the LGD area
+    borderStyle: {
+      color: "#3388ff",
+      weight: 3,
+      opacity: 0.7,
+      fill: true,
+      fillColor: "#3388ff",
+      fillOpacity: 0.1,
+      dashArray: "5, 5",
+      lineCap: "round"
+    },
+    
     // Sample pins for the area (used for initial demo)
     samplePins: [
       {

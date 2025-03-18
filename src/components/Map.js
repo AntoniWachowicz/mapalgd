@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, GeoJSON } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { format } from 'date-fns';
 import PinMarker from './PinMarker';
+import BoundaryEnforcer from './BoundaryEnforcer';
+import MapLegend from './MapLegend';
 import mapConfig from '../config/mapConfig';
+import lgdBorder from '../config/lgdBorder';
 
 // Component to handle map click events
 function MapEventHandler({ onMapClick }) {
@@ -62,15 +65,28 @@ export default function Map({
       minZoom={mapConfig.minZoom}
       maxZoom={mapConfig.maxZoom}
       maxBounds={mapConfig.boundaries}
+      maxBoundsViscosity={1.0} // Prevents the map from being dragged outside bounds
+      keyboard={true}
+      inertia={true}
+      inertiaDeceleration={3000} // Faster deceleration to prevent boundary issues
+      worldCopyJump={false}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       
+      {/* LGD Border */}
+      <GeoJSON 
+        data={lgdBorder} 
+        style={() => mapConfig.borderStyle}
+      />
+      
       {/* Map event handlers */}
       {isAdmin && <MapEventHandler onMapClick={onMapClick} />}
       <FlyToMarker selectedPin={selectedPin} />
+      <BoundaryEnforcer bounds={mapConfig.boundaries} />
+      <MapLegend />
       
       {/* Display all pins */}
       {pins.map((pin) => (
