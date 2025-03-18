@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { FaMap, FaUserCog, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
+import mapConfig from '../config/mapConfig';
 
 export default function Navigation() {
   const router = useRouter();

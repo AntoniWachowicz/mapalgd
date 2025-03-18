@@ -4,6 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { format } from 'date-fns';
 import PinMarker from './PinMarker';
+import mapConfig from '../config/mapConfig';
 
 // Component to handle map click events
 function MapEventHandler({ onMapClick }) {
@@ -39,9 +40,9 @@ export default function Map({
   onMapClick,
   isAdmin = false
 }) {
-  // Initial position is centered on LGD Bud-Uj Razem area in Poland
-  const [position, setPosition] = useState([51.7833, 19.4667]);
-  const [zoom, setZoom] = useState(9);
+  // Initial position is centered on the configured area
+  const [position, setPosition] = useState([mapConfig.initialPosition.lat, mapConfig.initialPosition.lng]);
+  const [zoom, setZoom] = useState(mapConfig.initialZoom);
 
   // Fix for Leaflet default icon issues in Next.js
   useEffect(() => {
@@ -58,12 +59,9 @@ export default function Map({
       center={position} 
       zoom={zoom} 
       style={{ height: '100%', width: '100%' }}
-      minZoom={8}
-      maxZoom={18}
-      maxBounds={[
-        [51.0, 18.0], // Southwest coordinates
-        [52.5, 21.0]  // Northeast coordinates
-      ]}
+      minZoom={mapConfig.minZoom}
+      maxZoom={mapConfig.maxZoom}
+      maxBounds={mapConfig.boundaries}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -92,17 +90,15 @@ export default function Map({
             )}
             <div className="pin-popup-title">{pin.name}</div>
             <div className={`pin-popup-category ${pin.mainCategory}`}>
-              {pin.mainCategory === 'finance' ? 'Finanse' : 
-               pin.mainCategory === 'social' ? 'Społeczne' : 
-               pin.mainCategory === 'health' ? 'Zdrowie' : 
+              {mapConfig.categoryNames[pin.mainCategory] || 
                pin.mainCategory.charAt(0).toUpperCase() + pin.mainCategory.slice(1)}
             </div>
             <div className="pin-popup-date">
-              {format(new Date(pin.date), 'dd.MM.yyyy')}
+              {format(new Date(pin.date), mapConfig.dateFormat)}
             </div>
             <div className="pin-popup-description">{pin.description}</div>
             <div className="pin-popup-value">
-              Wartość: {pin.value.toLocaleString()} zł
+              Wartość: {mapConfig.currency.format(pin.value)}
             </div>
             
             {/* Display all categories */}
@@ -113,9 +109,7 @@ export default function Map({
                   key={category}
                   className={`inline-block px-2 py-1 mr-1 rounded-full bg-${category} text-white text-xs`}
                 >
-                  {category === 'finance' ? 'Finanse' : 
-                   category === 'social' ? 'Społeczne' : 
-                   category === 'health' ? 'Zdrowie' : 
+                  {mapConfig.categoryNames[category] || 
                    category.charAt(0).toUpperCase() + category.slice(1)}
                 </span>
               ))}

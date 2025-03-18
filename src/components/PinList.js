@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import mapConfig from '../config/mapConfig';
 
 export default function PinList({ 
   pins, 
@@ -62,14 +63,12 @@ export default function PinList({
               className={`inline-block w-3 h-3 rounded-full bg-${pin.mainCategory} mr-2`}
             ></span>
             <span className="text-sm text-gray-600">
-              {pin.mainCategory === 'finance' ? 'Finanse' : 
-               pin.mainCategory === 'social' ? 'Społeczne' : 
-               pin.mainCategory === 'health' ? 'Zdrowie' : 
+              {mapConfig.categoryNames[pin.mainCategory] ||
                pin.mainCategory.charAt(0).toUpperCase() + pin.mainCategory.slice(1)}
             </span>
             <span className="text-sm text-gray-400 mx-2">•</span>
             <span className="text-sm text-gray-600">
-              {format(new Date(pin.date), 'dd.MM.yyyy')}
+              {format(new Date(pin.date), mapConfig.dateFormat)}
             </span>
           </div>
 
@@ -78,7 +77,7 @@ export default function PinList({
           </p>
 
           <div className="mt-2 text-sm font-medium text-gray-900">
-            {pin.value.toLocaleString()} zł
+            {mapConfig.currency.format(pin.value)}
           </div>
 
           {/* Categories */}
@@ -88,9 +87,7 @@ export default function PinList({
                 key={category}
                 className={`inline-block px-2 py-0.5 rounded-full bg-${category} bg-opacity-20 text-${category} text-xs`}
               >
-                {category === 'finance' ? 'Finanse' : 
-                 category === 'social' ? 'Społeczne' : 
-                 category === 'health' ? 'Zdrowie' : 
+                {mapConfig.categoryNames[category] ||
                  category.charAt(0).toUpperCase() + category.slice(1)}
               </span>
             ))}

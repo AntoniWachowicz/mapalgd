@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { toast } from 'react-toastify';
 import PinForm from '../components/PinForm';
 import PinList from '../components/PinList';
+import mapConfig from '../config/mapConfig';
 
 // Import map component dynamically to avoid SSR issues with Leaflet
 const Map = dynamic(() => import('../components/Map'), {
@@ -12,44 +13,7 @@ const Map = dynamic(() => import('../components/Map'), {
 });
 
 // Sample data for testing (will be replaced with API calls)
-const samplePins = [
-  {
-    id: '1',
-    name: 'Urząd Gminy Rokiciny',
-    lat: 51.6970,
-    lng: 19.7574,
-    date: '2023-07-15',
-    description: 'Główny budynek administracyjny gminy Rokiciny',
-    imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
-    value: 1500000,
-    mainCategory: 'finance',
-    categories: ['finance', 'social']
-  },
-  {
-    id: '2',
-    name: 'Centrum Społeczne w Ujazd',
-    lat: 51.6062,
-    lng: 19.5696,
-    date: '2023-06-10',
-    description: 'Lokalne centrum społeczne wspierające mieszkańców',
-    imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
-    value: 450000,
-    mainCategory: 'social',
-    categories: ['social', 'health']
-  },
-  {
-    id: '3',
-    name: 'Ośrodek Zdrowia Będków',
-    lat: 51.5383,
-    lng: 19.7200,
-    date: '2023-07-01',
-    description: 'Nowoczesna placówka zdrowotna świadcząca usługi medyczne',
-    imageUrl: 'https://images.unsplash.com/photo-1516549655669-d2190c128a78',
-    value: 750000,
-    mainCategory: 'health',
-    categories: ['health']
-  }
-];
+const samplePins = mapConfig.samplePins;
 
 export default function Admin() {
   const { data: session, status } = useSession();
@@ -138,8 +102,8 @@ export default function Admin() {
   return (
     <>
       <Head>
-        <title>Panel administracyjny - Mapa LGD Bud-Uj Razem</title>
-        <meta name="description" content="Panel administracyjny do zarządzania punktami na mapie" />
+        <title>Panel administracyjny - Mapa {mapConfig.areaName}</title>
+        <meta name="description" content={`Panel administracyjny do zarządzania punktami na mapie ${mapConfig.areaName}`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

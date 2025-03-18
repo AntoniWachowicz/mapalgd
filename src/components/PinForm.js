@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import mapConfig from '../config/mapConfig';
 
 // Pin form validation schema
 const PinSchema = Yup.object().shape({
@@ -117,7 +118,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           {/* Numerical Value */}
           <div>
             <label htmlFor="value" className="block text-sm font-medium text-gray-700">
-              Wartość (zł)
+              Wartość ({mapConfig.currency.symbol})
             </label>
             <Field
               type="number"
@@ -139,9 +140,9 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
               id="mainCategory"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             >
-              <option value="finance">Finanse</option>
-              <option value="social">Społeczne</option>
-              <option value="health">Zdrowie</option>
+              <option value="finance">{mapConfig.categoryNames.finance}</option>
+              <option value="social">{mapConfig.categoryNames.social}</option>
+              <option value="health">{mapConfig.categoryNames.health}</option>
             </Field>
             <ErrorMessage name="mainCategory" component="div" className="mt-1 text-sm text-red-600" />
           </div>
@@ -165,7 +166,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
                     htmlFor="category-finance"
                     className="ml-3 text-sm font-medium text-gray-700"
                   >
-                    Finanse
+                    {mapConfig.categoryNames.finance}
                   </label>
                 </div>
                 <div className="flex items-center">
@@ -180,7 +181,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
                     htmlFor="category-social"
                     className="ml-3 text-sm font-medium text-gray-700"
                   >
-                    Społeczne
+                    {mapConfig.categoryNames.social}
                   </label>
                 </div>
                 <div className="flex items-center">
@@ -195,7 +196,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
                     htmlFor="category-health"
                     className="ml-3 text-sm font-medium text-gray-700"
                   >
-                    Zdrowie
+                    {mapConfig.categoryNames.health}
                   </label>
                 </div>
               </div>
