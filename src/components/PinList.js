@@ -12,7 +12,7 @@ export default function PinList({
   if (pins.length === 0) {
     return (
       <div className="p-4 text-center text-gray-500">
-        No pins available. {isAdmin && 'Click on the map to add a new pin.'}
+        Brak dostępnych punktów. {isAdmin && 'Kliknij na mapę, aby dodać nowy punkt.'}
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function PinList({
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (window.confirm('Are you sure you want to delete this pin?')) {
+                    if (window.confirm('Czy na pewno chcesz usunąć ten punkt?')) {
                       onDeletePin(pin.id);
                     }
                   }}
@@ -62,11 +62,14 @@ export default function PinList({
               className={`inline-block w-3 h-3 rounded-full bg-${pin.mainCategory} mr-2`}
             ></span>
             <span className="text-sm text-gray-600">
-              {pin.mainCategory.charAt(0).toUpperCase() + pin.mainCategory.slice(1)}
+              {pin.mainCategory === 'finance' ? 'Finanse' : 
+               pin.mainCategory === 'social' ? 'Społeczne' : 
+               pin.mainCategory === 'health' ? 'Zdrowie' : 
+               pin.mainCategory.charAt(0).toUpperCase() + pin.mainCategory.slice(1)}
             </span>
             <span className="text-sm text-gray-400 mx-2">•</span>
             <span className="text-sm text-gray-600">
-              {format(new Date(pin.date), 'MMM d, yyyy')}
+              {format(new Date(pin.date), 'dd.MM.yyyy')}
             </span>
           </div>
 
@@ -75,17 +78,20 @@ export default function PinList({
           </p>
 
           <div className="mt-2 text-sm font-medium text-gray-900">
-            ${pin.value.toLocaleString()}
+            {pin.value.toLocaleString()} zł
           </div>
 
           {/* Categories */}
           <div className="mt-2 flex flex-wrap gap-1">
             {pin.categories.map(category => (
-              <span 
+                              <span 
                 key={category}
                 className={`inline-block px-2 py-0.5 rounded-full bg-${category} bg-opacity-20 text-${category} text-xs`}
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+                {category === 'finance' ? 'Finanse' : 
+                 category === 'social' ? 'Społeczne' : 
+                 category === 'health' ? 'Zdrowie' : 
+                 category.charAt(0).toUpperCase() + category.slice(1)}
               </span>
             ))}
           </div>

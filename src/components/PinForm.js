@@ -4,27 +4,27 @@ import * as Yup from 'yup';
 // Pin form validation schema
 const PinSchema = Yup.object().shape({
   name: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Name is required'),
+    .min(2, 'Za krótka nazwa!')
+    .max(50, 'Za długa nazwa!')
+    .required('Nazwa jest wymagana'),
   date: Yup.date()
-    .required('Date is required'),
+    .required('Data jest wymagana'),
   description: Yup.string()
-    .min(10, 'Description should be at least 10 characters')
-    .max(500, 'Description should not exceed 500 characters')
-    .required('Description is required'),
+    .min(10, 'Opis powinien mieć co najmniej 10 znaków')
+    .max(500, 'Opis nie powinien przekraczać 500 znaków')
+    .required('Opis jest wymagany'),
   imageUrl: Yup.string()
-    .url('Must be a valid URL'),
+    .url('Musi być prawidłowy URL'),
   value: Yup.number()
-    .min(0, 'Value cannot be negative')
-    .required('Value is required'),
+    .min(0, 'Wartość nie może być ujemna')
+    .required('Wartość jest wymagana'),
   mainCategory: Yup.string()
-    .oneOf(['finance', 'social', 'health'], 'Invalid category')
-    .required('Main category is required'),
+    .oneOf(['finance', 'social', 'health'], 'Nieprawidłowa kategoria')
+    .required('Kategoria główna jest wymagana'),
   categories: Yup.array()
-    .of(Yup.string().oneOf(['finance', 'social', 'health'], 'Invalid category'))
-    .min(1, 'At least one category is required')
-    .required('Categories are required')
+    .of(Yup.string().oneOf(['finance', 'social', 'health'], 'Nieprawidłowa kategoria'))
+    .min(1, 'Wymagana jest co najmniej jedna kategoria')
+    .required('Kategorie są wymagane')
 });
 
 export default function PinForm({ initialValues, onSubmit, onCancel }) {
@@ -47,7 +47,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           {/* Pin Name */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Name
+              Nazwa
             </label>
             <Field
               type="text"
@@ -61,7 +61,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           {/* Date */}
           <div>
             <label htmlFor="date" className="block text-sm font-medium text-gray-700">
-              Date
+              Data
             </label>
             <Field
               type="date"
@@ -75,7 +75,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           {/* Description */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-              Description
+              Opis
             </label>
             <Field
               as="textarea"
@@ -90,7 +90,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           {/* Image URL */}
           <div>
             <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">
-              Image URL
+              URL Obrazka
             </label>
             <Field
               type="text"
@@ -117,7 +117,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           {/* Numerical Value */}
           <div>
             <label htmlFor="value" className="block text-sm font-medium text-gray-700">
-              Value
+              Wartość (zł)
             </label>
             <Field
               type="number"
@@ -131,7 +131,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           {/* Main Category */}
           <div>
             <label htmlFor="mainCategory" className="block text-sm font-medium text-gray-700">
-              Main Category
+              Kategoria Główna
             </label>
             <Field
               as="select"
@@ -139,9 +139,9 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
               id="mainCategory"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             >
-              <option value="finance">Finance</option>
-              <option value="social">Social</option>
-              <option value="health">Health</option>
+              <option value="finance">Finanse</option>
+              <option value="social">Społeczne</option>
+              <option value="health">Zdrowie</option>
             </Field>
             <ErrorMessage name="mainCategory" component="div" className="mt-1 text-sm text-red-600" />
           </div>
@@ -150,7 +150,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           <div>
             <fieldset>
               <legend className="block text-sm font-medium text-gray-700">
-                Categories (Select all that apply)
+                Kategorie (Wybierz wszystkie pasujące)
               </legend>
               <div className="mt-2 space-y-2">
                 <div className="flex items-center">
@@ -165,7 +165,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
                     htmlFor="category-finance"
                     className="ml-3 text-sm font-medium text-gray-700"
                   >
-                    Finance
+                    Finanse
                   </label>
                 </div>
                 <div className="flex items-center">
@@ -180,7 +180,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
                     htmlFor="category-social"
                     className="ml-3 text-sm font-medium text-gray-700"
                   >
-                    Social
+                    Społeczne
                   </label>
                 </div>
                 <div className="flex items-center">
@@ -195,7 +195,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
                     htmlFor="category-health"
                     className="ml-3 text-sm font-medium text-gray-700"
                   >
-                    Health
+                    Zdrowie
                   </label>
                 </div>
               </div>
@@ -207,7 +207,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label htmlFor="lat" className="block text-sm font-medium text-gray-700">
-                Latitude
+                Szerokość geograficzna
               </label>
               <Field
                 type="text"
@@ -219,7 +219,7 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
             </div>
             <div>
               <label htmlFor="lng" className="block text-sm font-medium text-gray-700">
-                Longitude
+                Długość geograficzna
               </label>
               <Field
                 type="text"
@@ -238,14 +238,14 @@ export default function PinForm({ initialValues, onSubmit, onCancel }) {
               onClick={onCancel}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
             >
-              Cancel
+              Anuluj
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
               className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              {isSubmitting ? 'Saving...' : 'Save Pin'}
+              {isSubmitting ? 'Zapisywanie...' : 'Zapisz punkt'}
             </button>
           </div>
         </Form>

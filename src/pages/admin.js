@@ -15,23 +15,23 @@ const Map = dynamic(() => import('../components/Map'), {
 const samplePins = [
   {
     id: '1',
-    name: 'Financial District Office',
-    lat: 40.7128,
-    lng: -74.0060,
+    name: 'Urząd Gminy Rokiciny',
+    lat: 51.6970,
+    lng: 19.7574,
     date: '2023-07-15',
-    description: 'Main office building in the financial district',
-    imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab',
+    description: 'Główny budynek administracyjny gminy Rokiciny',
+    imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
     value: 1500000,
     mainCategory: 'finance',
     categories: ['finance', 'social']
   },
   {
     id: '2',
-    name: 'Community Center',
-    lat: 40.7200,
-    lng: -73.9950,
+    name: 'Centrum Społeczne w Ujazd',
+    lat: 51.6062,
+    lng: 19.5696,
     date: '2023-06-10',
-    description: 'Local community center serving the neighborhood',
+    description: 'Lokalne centrum społeczne wspierające mieszkańców',
     imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
     value: 450000,
     mainCategory: 'social',
@@ -39,11 +39,11 @@ const samplePins = [
   },
   {
     id: '3',
-    name: 'Medical Clinic',
-    lat: 40.7300,
-    lng: -74.0100,
+    name: 'Ośrodek Zdrowia Będków',
+    lat: 51.5383,
+    lng: 19.7200,
     date: '2023-07-01',
-    description: 'Modern healthcare facility providing essential services',
+    description: 'Nowoczesna placówka zdrowotna świadcząca usługi medyczne',
     imageUrl: 'https://images.unsplash.com/photo-1516549655669-d2190c128a78',
     value: 750000,
     mainCategory: 'health',
@@ -72,14 +72,14 @@ export default function Admin() {
 
   // Check for user authentication
   if (status === 'loading') {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <div className="flex justify-center items-center h-screen">Ładowanie...</div>;
   }
 
   if (!session) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
-        <h1 className="text-2xl font-bold mb-4">Admin Access Required</h1>
-        <p>You need to be logged in as an administrator to access this page.</p>
+        <h1 className="text-2xl font-bold mb-4">Wymagany dostęp administratora</h1>
+        <p>Musisz być zalogowany jako administrator, aby uzyskać dostęp do tej strony.</p>
       </div>
     );
   }
@@ -117,11 +117,11 @@ export default function Admin() {
     if (isEditing) {
       // Update existing pin
       setPins(pins.map(pin => pin.id === newPin.id ? newPin : pin));
-      toast.success('Pin updated successfully!');
+      toast.success('Punkt został zaktualizowany pomyślnie!');
     } else {
       // Add new pin
       setPins([...pins, newPin]);
-      toast.success('New pin added successfully!');
+      toast.success('Nowy punkt został dodany pomyślnie!');
     }
 
     setShowForm(false);
@@ -132,14 +132,14 @@ export default function Admin() {
   // Handle pin deletion
   const handleDeletePin = (pinId) => {
     setPins(pins.filter(pin => pin.id !== pinId));
-    toast.info('Pin deleted successfully!');
+    toast.info('Punkt został usunięty pomyślnie!');
   };
 
   return (
     <>
       <Head>
-        <title>Admin - Map Pin Application</title>
-        <meta name="description" content="Admin panel for managing map pins" />
+        <title>Panel administracyjny - Mapa LGD Bud-Uj Razem</title>
+        <meta name="description" content="Panel administracyjny do zarządzania punktami na mapie" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -147,8 +147,8 @@ export default function Admin() {
         {/* Sidebar with pin list */}
         <div className="w-96 bg-white shadow-lg z-10 overflow-auto">
           <div className="p-4 border-b">
-            <h2 className="text-xl font-bold mb-2">Admin Panel</h2>
-            <p className="text-sm text-gray-600 mb-4">Click on the map to add a new pin</p>
+            <h2 className="text-xl font-bold mb-2">Panel Administracyjny</h2>
+            <p className="text-sm text-gray-600 mb-4">Kliknij na mapę, aby dodać nowy punkt</p>
             
             {/* Add new pin button */}
             <button 
@@ -159,13 +159,13 @@ export default function Admin() {
               }}
               className="w-full py-2 bg-blue-600 text-white rounded font-medium hover:bg-blue-700"
             >
-              Add New Pin
+              Dodaj Nowy Punkt
             </button>
           </div>
           
           {loading ? (
             <div className="flex justify-center items-center h-40">
-              <p>Loading pins...</p>
+              <p>Ładowanie punktów...</p>
             </div>
           ) : (
             <PinList 
@@ -194,7 +194,7 @@ export default function Admin() {
             <div className="absolute inset-0 bg-black bg-opacity-50 z-20 flex justify-center items-center">
               <div className="bg-white rounded-lg p-6 w-[500px] max-h-[90vh] overflow-auto">
                 <h2 className="text-xl font-bold mb-4">
-                  {isEditing ? 'Edit Pin' : 'Add New Pin'}
+                  {isEditing ? 'Edytuj Punkt' : 'Dodaj Nowy Punkt'}
                 </h2>
                 <PinForm 
                   initialValues={isEditing ? editingPin : {

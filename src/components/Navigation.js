@@ -49,7 +49,7 @@ export default function Navigation() {
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
               >
-                Map
+                Mapa
               </Link>
 
               {session && (
@@ -61,7 +61,7 @@ export default function Navigation() {
                       : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                   }`}
                 >
-                  Admin
+                  Panel Administracyjny
                 </Link>
               )}
             </div>
@@ -90,7 +90,7 @@ export default function Navigation() {
                     className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
                   >
                     <FaSignInAlt className="h-5 w-5 mr-1" />
-                    Sign in
+                    Zaloguj się
                   </button>
                 </div>
               )}
@@ -116,9 +116,9 @@ export default function Navigation() {
             style={{ zIndex: 10001 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-xl font-bold mb-4">Sign In</h2>
+            <h2 className="text-xl font-bold mb-4">Logowanie</h2>
             <p className="mb-4 text-gray-600">
-              Sign in to access the admin features.
+              Zaloguj się, aby uzyskać dostęp do panelu administracyjnego.
             </p>
             
             <form onSubmit={(e) => {
@@ -143,7 +143,7 @@ export default function Navigation() {
               </div>
               <div className="mb-6">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Password
+                  Hasło
                 </label>
                 <input
                   type="password"
@@ -159,13 +159,13 @@ export default function Navigation() {
                   onClick={() => setShowSignIn(false)}
                   className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                 >
-                  Cancel
+                  Anuluj
                 </button>
                 <button
                   type="submit"
                   className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
                 >
-                  Sign In
+                  Zaloguj
                 </button>
               </div>
             </form>

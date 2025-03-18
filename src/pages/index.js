@@ -12,23 +12,23 @@ const Map = dynamic(() => import('../components/Map'), {
 const samplePins = [
   {
     id: '1',
-    name: 'Financial District Office',
-    lat: 40.7128,
-    lng: -74.0060,
+    name: 'Urząd Gminy Rokiciny',
+    lat: 51.6970,
+    lng: 19.7574,
     date: '2023-07-15',
-    description: 'Main office building in the financial district',
-    imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab',
+    description: 'Główny budynek administracyjny gminy Rokiciny',
+    imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
     value: 1500000,
     mainCategory: 'finance',
     categories: ['finance', 'social']
   },
   {
     id: '2',
-    name: 'Community Center',
-    lat: 40.7200,
-    lng: -73.9950,
+    name: 'Centrum Społeczne w Ujazd',
+    lat: 51.6062,
+    lng: 19.5696,
     date: '2023-06-10',
-    description: 'Local community center serving the neighborhood',
+    description: 'Lokalne centrum społeczne wspierające mieszkańców',
     imageUrl: 'https://images.unsplash.com/photo-1577791465485-b80039b4d69a',
     value: 450000,
     mainCategory: 'social',
@@ -36,11 +36,11 @@ const samplePins = [
   },
   {
     id: '3',
-    name: 'Medical Clinic',
-    lat: 40.7300,
-    lng: -74.0100,
+    name: 'Ośrodek Zdrowia Będków',
+    lat: 51.5383,
+    lng: 19.7200,
     date: '2023-07-01',
-    description: 'Modern healthcare facility providing essential services',
+    description: 'Nowoczesna placówka zdrowotna świadcząca usługi medyczne',
     imageUrl: 'https://images.unsplash.com/photo-1516549655669-d2190c128a78',
     value: 750000,
     mainCategory: 'health',
@@ -71,8 +71,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Map Pin Application</title>
-        <meta name="description" content="Interactive map application with pin categories" />
+        <title>Mapa LGD Bud-Uj Razem</title>
+        <meta name="description" content="Interaktywna mapa z punktami dla obszaru LGD" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -80,7 +80,7 @@ export default function Home() {
         {/* Sidebar with pin list */}
         <div className="w-96 bg-white shadow-lg z-20 overflow-auto">
           <div className="p-4 border-b">
-            <h2 className="text-xl font-bold mb-4">Locations</h2>
+            <h2 className="text-xl font-bold mb-4">Lokalizacje</h2>
             
             {/* Category filters */}
             <div className="flex space-x-2 mb-4">
@@ -88,32 +88,32 @@ export default function Home() {
                 onClick={() => setFilter('all')}
                 className={`px-3 py-1 rounded-full text-sm ${filter === 'all' ? 'bg-gray-800 text-white' : 'bg-gray-200'}`}
               >
-                All
+                Wszystkie
               </button>
               <button 
                 onClick={() => setFilter('finance')}
                 className={`px-3 py-1 rounded-full text-sm ${filter === 'finance' ? 'bg-finance text-white' : 'bg-gray-200'}`}
               >
-                Finance
+                Finanse
               </button>
               <button 
                 onClick={() => setFilter('social')}
                 className={`px-3 py-1 rounded-full text-sm ${filter === 'social' ? 'bg-social text-white' : 'bg-gray-200'}`}
               >
-                Social
+                Społeczne
               </button>
               <button 
                 onClick={() => setFilter('health')}
                 className={`px-3 py-1 rounded-full text-sm ${filter === 'health' ? 'bg-health text-white' : 'bg-gray-200'}`}
               >
-                Health
+                Zdrowie
               </button>
             </div>
           </div>
           
           {loading ? (
             <div className="flex justify-center items-center h-40">
-              <p>Loading pins...</p>
+              <p>Ładowanie punktów...</p>
             </div>
           ) : (
             <PinList 

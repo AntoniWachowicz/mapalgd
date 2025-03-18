@@ -39,9 +39,9 @@ export default function Map({
   onMapClick,
   isAdmin = false
 }) {
-  // Initial position is centered on New York City by default
-  const [position, setPosition] = useState([40.7128, -74.0060]);
-  const [zoom, setZoom] = useState(12);
+  // Initial position is centered on LGD Bud-Uj Razem area in Poland
+  const [position, setPosition] = useState([51.7833, 19.4667]);
+  const [zoom, setZoom] = useState(9);
 
   // Fix for Leaflet default icon issues in Next.js
   useEffect(() => {
@@ -58,6 +58,12 @@ export default function Map({
       center={position} 
       zoom={zoom} 
       style={{ height: '100%', width: '100%' }}
+      minZoom={8}
+      maxZoom={18}
+      maxBounds={[
+        [51.0, 18.0], // Southwest coordinates
+        [52.5, 21.0]  // Northeast coordinates
+      ]}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -86,25 +92,31 @@ export default function Map({
             )}
             <div className="pin-popup-title">{pin.name}</div>
             <div className={`pin-popup-category ${pin.mainCategory}`}>
-              {pin.mainCategory.charAt(0).toUpperCase() + pin.mainCategory.slice(1)}
+              {pin.mainCategory === 'finance' ? 'Finanse' : 
+               pin.mainCategory === 'social' ? 'Społeczne' : 
+               pin.mainCategory === 'health' ? 'Zdrowie' : 
+               pin.mainCategory.charAt(0).toUpperCase() + pin.mainCategory.slice(1)}
             </div>
             <div className="pin-popup-date">
-              {format(new Date(pin.date), 'MMM d, yyyy')}
+              {format(new Date(pin.date), 'dd.MM.yyyy')}
             </div>
             <div className="pin-popup-description">{pin.description}</div>
             <div className="pin-popup-value">
-              Value: ${pin.value.toLocaleString()}
+              Wartość: {pin.value.toLocaleString()} zł
             </div>
             
             {/* Display all categories */}
             <div className="mt-2 text-xs">
-              Categories:
+              Kategorie:
               {pin.categories.map(category => (
                 <span 
                   key={category}
                   className={`inline-block px-2 py-1 mr-1 rounded-full bg-${category} text-white text-xs`}
                 >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                  {category === 'finance' ? 'Finanse' : 
+                   category === 'social' ? 'Społeczne' : 
+                   category === 'health' ? 'Zdrowie' : 
+                   category.charAt(0).toUpperCase() + category.slice(1)}
                 </span>
               ))}
             </div>
