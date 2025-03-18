@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fetch-boundaries": "node scripts/fetchBoundaries.js",
+    "simple-boundaries": "node scripts/createSimpleBoundaries.js"
   },
   "dependencies": {
     "next": "13.4.12",
@@ -23,7 +25,8 @@
     "react-toastify": "^9.1.3",
     "tailwindcss": "^3.3.3",
     "postcss": "^8.4.27",
-    "autoprefixer": "^10.4.14"
+    "autoprefixer": "^10.4.14",
+    "osmtogeojson": "^3.0.0-beta.5"
   },
   "devDependencies": {
     "eslint": "8.45.0",
