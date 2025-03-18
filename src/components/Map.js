@@ -80,6 +80,15 @@ export default function Map({
       <GeoJSON 
         data={lgdBorder} 
         style={() => mapConfig.borderStyle}
+        onEachFeature={(feature, layer) => {
+          if (feature.properties && feature.properties.name) {
+            layer.bindTooltip(feature.properties.name, {
+              permanent: false,
+              direction: 'center',
+              className: 'lgd-border-tooltip'
+            });
+          }
+        }}
       />
       
       {/* Map event handlers */}

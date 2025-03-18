@@ -70,3 +70,13 @@
   font-weight: bold;
   margin-top: 5px;
 }
+
+/* LGD Border tooltip style */
+.lgd-border-tooltip {
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  font-weight: bold;
+  padding: 4px 8px;
+}

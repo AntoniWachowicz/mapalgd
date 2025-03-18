@@ -32,6 +32,10 @@ const MapLegend = () => {
           <span>Granica obszaru ${mapConfig.areaName}</span>
         </div>
         
+        <div style="margin-left: 28px; font-size: 11px; margin-bottom: 8px; color: #666;">
+          Gminy: Będków, Budziszewice, Czerniewice, Lubochnia, Rokiciny, Rzeczyca, Tomaszów Mazowiecki, Ujazd, Żelechlinek
+        </div>
+        
         <div style="display: flex; align-items: center; margin-bottom: 8px;">
           <div style="width: 12px; height: 12px; border-radius: 50%; 
                       background-color: ${mapConfig.categoryNames.finance ? '#4CAF50' : 'green'}; 

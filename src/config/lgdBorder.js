@@ -1,14 +1,18 @@
 /**
- * GeoJSON data representing the LGD Bud-Uj Razem border
+ * GeoJSON data representing the LGD Bud-Uj Razem border based on municipality boundaries
  * 
- * This is a detailed example boundary - for production use,
- * replace with the actual precise border of your LGD area.
+ * LGD Bud-Uj Razem includes the following municipalities (gminy):
+ * - Będków
+ * - Budziszewice
+ * - Czerniewice
+ * - Lubochnia
+ * - Rokiciny
+ * - Rzeczyca
+ * - Tomaszów Mazowiecki (gmina wiejska)
+ * - Ujazd
+ * - Żelechlinek
  * 
- * You can obtain exact boundary data from:
- * 1. GIS departments of local municipalities
- * 2. Polish geoportal (https://www.geoportal.gov.pl/)
- * 3. OpenStreetMap administrative boundaries
- * 4. QGIS or other GIS software to export the boundary
+ * This file provides an approximation of their combined boundaries.
  */
 
 const lgdBorder = {
@@ -18,47 +22,113 @@ const lgdBorder = {
         "type": "Feature",
         "properties": {
           "name": "LGD Bud-Uj Razem",
-          "description": "Granice obszaru LGD"
+          "description": "Granice obszaru LGD (gminy członkowskie)"
         },
         "geometry": {
-          "type": "Polygon",
+          "type": "MultiPolygon",
           "coordinates": [
-            [
-              // This is a more detailed boundary shape following natural features and municipal borders
-              // Replace with actual coordinates from GIS data
-              [19.487, 51.687],
-              [19.512, 51.752],
-              [19.532, 51.772],
-              [19.567, 51.812],
-              [19.622, 51.827],
-              [19.689, 51.835],
-              [19.734, 51.848],
-              [19.793, 51.843],
-              [19.834, 51.862],
-              [19.879, 51.848],
-              [19.928, 51.854],
-              [19.956, 51.823],
-              [19.983, 51.831],
-              [20.012, 51.812],
-              [20.045, 51.785],
-              [20.032, 51.743],
-              [20.056, 51.721],
-              [20.023, 51.686],
-              [20.045, 51.652],
-              [20.012, 51.632],
-              [19.973, 51.612],
-              [19.923, 51.592],
-              [19.867, 51.587],
-              [19.825, 51.602],
-              [19.789, 51.589],
-              [19.734, 51.598],
-              [19.678, 51.612],
-              [19.632, 51.598],
-              [19.587, 51.623],
-              [19.543, 51.645],
-              [19.512, 51.663],
-              [19.487, 51.687]
-            ]
+            // This represents the combined boundaries of all member municipalities
+            // The coordinates below approximate the shapes of the 9 municipalities
+            // For actual implementation, replace with precise GIS data
+            
+            // Będków
+            [[
+              [19.695, 51.480],
+              [19.764, 51.488],
+              [19.771, 51.465],
+              [19.745, 51.436],
+              [19.714, 51.437],
+              [19.695, 51.480]
+            ]],
+            
+            // Budziszewice
+            [[
+              [19.815, 51.527],
+              [19.858, 51.535],
+              [19.872, 51.502],
+              [19.822, 51.497],
+              [19.815, 51.527]
+            ]],
+            
+            // Czerniewice
+            [[
+              [19.999, 51.580],
+              [20.063, 51.597],
+              [20.089, 51.562],
+              [20.062, 51.525],
+              [19.996, 51.520],
+              [19.999, 51.580]
+            ]],
+            
+            // Lubochnia
+            [[
+              [19.993, 51.527],
+              [20.062, 51.525],
+              [20.089, 51.500],
+              [20.075, 51.470],
+              [20.018, 51.458],
+              [19.978, 51.482],
+              [19.993, 51.527]
+            ]],
+            
+            // Rokiciny
+            [[
+              [19.770, 51.541],
+              [19.815, 51.527],
+              [19.822, 51.497],
+              [19.798, 51.482],
+              [19.764, 51.488],
+              [19.732, 51.510],
+              [19.770, 51.541]
+            ]],
+            
+            // Rzeczyca
+            [[
+              [19.995, 51.520],
+              [20.018, 51.458],
+              [19.957, 51.430],
+              [19.905, 51.453],
+              [19.915, 51.498],
+              [19.995, 51.520]
+            ]],
+            
+            // Tomaszów Mazowiecki (gmina wiejska)
+            [[
+              [19.978, 51.482],
+              [20.018, 51.458],
+              [19.957, 51.430],
+              [19.905, 51.453],
+              [19.822, 51.497],
+              [19.798, 51.482],
+              [19.745, 51.436],
+              [19.714, 51.437],
+              [19.683, 51.457],
+              [19.720, 51.499],
+              [19.772, 51.508],
+              [19.978, 51.482]
+            ]],
+            
+            // Ujazd
+            [[
+              [19.770, 51.541],
+              [19.832, 51.597],
+              [19.872, 51.580],
+              [19.858, 51.535],
+              [19.815, 51.527],
+              [19.770, 51.541]
+            ]],
+            
+            // Żelechlinek
+            [[
+              [19.872, 51.580],
+              [19.932, 51.608],
+              [19.999, 51.580],
+              [19.996, 51.520],
+              [19.915, 51.498],
+              [19.872, 51.502],
+              [19.858, 51.535],
+              [19.872, 51.580]
+            ]]
           ]
         }
       }
